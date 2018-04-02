@@ -30,6 +30,8 @@ class UserSettingsDecorator
     user.settings['system_font_ui']      = system_font_ui_preference if change?('setting_system_font_ui')
     user.settings['noindex']             = noindex_preference if change?('setting_noindex')
     user.settings['theme']               = theme_preference if change?('setting_theme')
+    user.settings['flavour']                 = flavour_preference if change?('setting_flavour')
+    user.settings['skin']                    = skin_preference if change?('setting_skin')
   end
 
   def merged_notification_emails
@@ -54,6 +56,10 @@ class UserSettingsDecorator
 
   def boost_modal_preference
     boolean_cast_setting 'setting_boost_modal'
+  end
+  
+  def favourite_modal_preference
+    boolean_cast_setting 'setting_favourite_modal'
   end
 
   def delete_modal_preference
@@ -88,8 +94,12 @@ class UserSettingsDecorator
     boolean_cast_setting 'setting_noindex'
   end
 
-  def theme_preference
-    settings['setting_theme']
+  def flavour_preference
+    settings['setting_flavour']
+  end
+
+  def skin_preference
+    settings['setting_skin']
   end
 
   def boolean_cast_setting(key)

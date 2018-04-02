@@ -29,7 +29,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -91,10 +91,14 @@ Rails.application.configure do
   config.action_mailer.delivery_method = ENV.fetch('SMTP_DELIVERY_METHOD', 'smtp').to_sym
 
   config.action_dispatch.default_headers = {
-    'Server'                 => 'Mastodon',
-    #'X-Frame-Options'        => 'DENY',
-    #'X-Content-Type-Options' => 'nosniff',
-    #'X-XSS-Protection'       => '1; mode=block',
+    'X-Frame-Options'         => 'DENY',
+    'X-Content-Type-Options'  => 'nosniff',
+    'X-XSS-Protection'        => '1; mode=block',
+    'Content-Security-Policy' => "frame-ancestors 'none'; object-src 'none'; script-src 'self' https://dev-static.glitch.social ; base-uri 'none';" , 
+    'Referrer-Policy'         => 'same-origin',
+    'Strict-Transport-Security' => 'max-age=63072000; includeSubDomains; preload',
+    'X-Clacks-Overhead' => 'GNU Natalie Nguyen'
+
   }
 
   config.x.otp_secret = ENV.fetch('OTP_SECRET')

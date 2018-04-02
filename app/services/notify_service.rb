@@ -16,6 +16,15 @@ class NotifyService < BaseService
 
   private
 
+  def visibility
+    return @visibility if defined?(@visibility)
+    unless @activity.is_a?(Follow) || @activity.is_a?(FollowRequest)
+      status = @activity.is_a?(Status) ? @activity : @activity.status
+      @visibility = status.visibility
+    end
+    @visibility
+  end
+
   def blocked_mention?
     FeedManager.instance.filter?(:mentions, @notification.mention.status, @recipient.id)
   end
@@ -64,6 +73,13 @@ class NotifyService < BaseService
       !response_to_recipient?
   end
 
+  def optional_non_following_and_too_young?
+    @recipient.user.settings.interactions['must_be_one_day_old'] &&
+      Time.now - @notification.from_account.created_at < 1.days &&
+      !following_sender? &&
+      !response_to_recipient?
+  end
+
   def hellbanned?
     @notification.from_account.silenced? && !following_sender?
   end
@@ -86,6 +102,7 @@ class NotifyService < BaseService
     blocked ||= optional_non_follower?                           # Options
     blocked ||= optional_non_following?                          # Options
     blocked ||= optional_non_following_and_direct?               # Options
+    blocked ||= optional_non_following_and_too_young?            # Options
     blocked ||= conversation_muted?
     blocked ||= send("blocked_#{@notification.type}?")           # Type-dependent filters
     blocked

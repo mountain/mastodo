@@ -7,7 +7,7 @@
 # For more information, see docs/Running-Mastodon/Administration-guide.md
 #
 defaults: &defaults
-  site_title: Mastodon
+  site_title: 'Awoo.space'
   site_description: ''
   site_extended_description: ''
   site_terms: ''
@@ -16,12 +16,13 @@ defaults: &defaults
   open_registrations: true
   closed_registrations_message: ''
   open_deletion: true
+  timeline_preview: false
   min_invite_role: 'admin'
-  timeline_preview: true
   show_staff_badge: true
   default_sensitive: false
   unfollow_modal: false
   boost_modal: false
+  favourite_modal: false
   delete_modal: true
   auto_play_gif: false
   donate_cputime: false
@@ -30,7 +31,8 @@ defaults: &defaults
   reduce_motion: false
   system_font_ui: false
   noindex: false
-  theme: 'default'
+  flavour: 'glitch'
+  skin: 'awoo'
   notification_emails:
     follow: false
     reblog: false
@@ -42,6 +44,7 @@ defaults: &defaults
     must_be_follower: false
     must_be_following: false
     must_be_following_dm: false
+    must_be_one_day_old: false
   reserved_usernames:
     - admin
     - support
@@ -53,6 +56,8 @@ defaults: &defaults
   activity_api_enabled: true
   peers_api_enabled: true
   show_known_fediverse_at_about_page: true
+  whitelist_enabled: true
+
 development:
   <<: *defaults
 

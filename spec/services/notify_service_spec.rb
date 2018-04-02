@@ -48,6 +48,26 @@ RSpec.describe NotifyService do
     is_expected.to_not change(Notification, :count)
   end
 
+  describe 'reblogs' do
+    let(:status)   { Fabricate(:status, account: Fabricate(:account)) }
+    let(:activity) { Fabricate(:status, account: sender, reblog: status) }
+
+    it 'shows reblogs by default' do
+      recipient.follow!(sender)
+      is_expected.to change(Notification, :count)
+    end
+
+    it 'shows reblogs when explicitly enabled' do
+      recipient.follow!(sender, reblogs: true)
+      is_expected.to change(Notification, :count)
+    end
+
+    it 'hides reblogs when disabled' do
+      recipient.follow!(sender, reblogs: false)
+      is_expected.to_not change(Notification, :count)
+    end
+  end
+  
   context 'for direct messages' do
     let(:activity) { Fabricate(:mention, account: recipient, status: Fabricate(:status, account: sender, visibility: :direct)) }
 
@@ -156,6 +176,22 @@ RSpec.describe NotifyService do
       it "doesn't send email" do
         is_expected.to_not change(ActionMailer::Base.deliveries, :count).from(0)
       end
+    end
+  end
+
+  context do
+    let(:asshole)  { Fabricate(:account, username: 'asshole') }
+    let(:activity) { Fabricate(:mention, account: recipient, status: Fabricate(:status, account: sender, visibility: :direct)) }
+
+    it 'does not notify when direct messages from non-followed user are muted' do
+      interactions = user.settings.interactions
+      user.settings.interactions = interactions.merge('must_be_following_dm' => true)
+      is_expected.to_not change(Notification, :count)
+    end
+    
+    it 'does notify when direct messages are sent to the recipient with a follow request' do
+      FollowRequest.create(account: recipient, target_account: asshole)
+      is_expected.to change(Notification, :count)
     end
   end
 end

@@ -63,6 +63,9 @@ RUN apk -U upgrade \
  && rm -rf /tmp/* /var/cache/apk/*
 
 COPY Gemfile Gemfile.lock package.json yarn.lock .yarnclean /mastodon/
+COPY stack-fix.c /lib
+RUN gcc -shared -fPIC /lib/stack-fix.c -o /lib/stack-fix.so
+RUN rm /lib/stack-fix.c
 
 RUN bundle config build.nokogiri --with-iconv-lib=/usr/local/lib --with-iconv-include=/usr/local/include \
  && bundle install -j$(getconf _NPROCESSORS_ONLN) --deployment --without test development \
@@ -81,4 +84,5 @@ VOLUME /mastodon/public/system /mastodon/public/assets /mastodon/public/packs
 
 USER mastodon
 
+ENV LD_PRELOAD=/lib/stack-fix.so
 ENTRYPOINT ["/sbin/tini", "--"]

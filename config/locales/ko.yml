@@ -720,8 +720,6 @@ ko:
 
       <p><a href="https://github.com/discourse/discourse">Discourse privacy policy</a>에서 가져옴.</p>
     title: "%{instance} 이용약관과 개인정보 취급 방침"
-  themes:
-    default: 마스토돈
   time:
     formats:
       default: "%Y년 %m월 %d일 %H:%M"

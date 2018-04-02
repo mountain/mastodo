@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class Settings::NotificationsController < ApplicationController
-  layout 'admin'
-
-  before_action :authenticate_user!
-
+class Settings::NotificationsController < Settings::BaseController
   def show; end
 
   def update
@@ -26,7 +22,7 @@ class Settings::NotificationsController < ApplicationController
   def user_settings_params
     params.require(:user).permit(
       notification_emails: %i(follow follow_request reblog favourite mention digest),
-      interactions: %i(must_be_follower must_be_following must_be_following_dm)
+      interactions: %i(must_be_follower must_be_following must_be_following_dm must_be_one_day_old)
     )
   end
 end

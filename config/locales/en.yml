@@ -454,6 +454,7 @@ en:
     changes_saved_msg: Changes successfully saved!
     powered_by: powered by %{link}
     save_changes: Save changes
+    use_this: Use this
     validation_errors:
       one: Something isn't quite right yet! Please review the error below
       other: Something isn't quite right yet! Please review %{count} errors below
@@ -486,6 +487,14 @@ en:
       expires_at: Expires
       uses: Uses
     title: Invite people
+  keyword_mutes:
+    add_keyword: Add keyword
+    edit: Edit
+    edit_keyword: Edit keyword
+    keyword: Keyword
+    match_whole_word: Match whole word
+    remove: Remove
+    remove_all: Remove all
   landing_strip_html: "<strong>%{name}</strong> is a user on %{link_to_root_path}. You can follow them or interact with them if you have an account anywhere in the fediverse."
   landing_strip_signup_html: If you don't, you can <a href="%{sign_up_path}">sign up here</a>.
   lists:
@@ -620,13 +629,15 @@ en:
     title: Sessions
   settings:
     authorized_apps: Authorized apps
-    back: Back to Mastodon
+    back: Back to Awoo.space
     delete: Account deletion
     development: Development
     edit_profile: Edit profile
     export: Data export
+    flavours: Flavours
     followers: Authorized followers
     import: Import
+    keyword_mutes: Muted keywords
     migrate: Account migration
     notifications: Notifications
     preferences: Preferences

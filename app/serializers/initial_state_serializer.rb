@@ -2,9 +2,14 @@
 
 class InitialStateSerializer < ActiveModel::Serializer
   attributes :meta, :compose, :accounts,
-             :media_attachments, :settings, :push_subscription
+             :media_attachments, :settings, :push_subscription,
+             :max_toot_chars
 
   has_many :custom_emojis, serializer: REST::CustomEmojiSerializer
+
+  def max_toot_chars
+    StatusLengthValidator::MAX_CHARS
+  end
 
   def custom_emojis
     CustomEmoji.local.where(disabled: false)
@@ -28,6 +33,7 @@ class InitialStateSerializer < ActiveModel::Serializer
       store[:auto_play_gif]  = object.current_account.user.setting_auto_play_gif
       store[:donate_cputime]  = object.current_account.user.setting_donate_cputime
       store[:donate_cpupercent]  = object.current_account.user.setting_donate_cpupercent
+      store[:favourite_modal]         = object.current_account.user.setting_favourite_modal
       store[:display_sensitive_media] = object.current_account.user.setting_display_sensitive_media
       store[:reduce_motion]  = object.current_account.user.setting_reduce_motion
     end
@@ -57,6 +63,6 @@ class InitialStateSerializer < ActiveModel::Serializer
   end
 
   def media_attachments
-    { accept_content_types: MediaAttachment::IMAGE_FILE_EXTENSIONS + MediaAttachment::VIDEO_FILE_EXTENSIONS + MediaAttachment::IMAGE_MIME_TYPES + MediaAttachment::VIDEO_MIME_TYPES }
+    { accept_content_types: MediaAttachment::IMAGE_FILE_EXTENSIONS + MediaAttachment::VIDEO_FILE_EXTENSIONS + MediaAttachment::AUDIO_FILE_EXTENSIONS + MediaAttachment::IMAGE_MIME_TYPES + MediaAttachment::VIDEO_MIME_TYPES + MediaAttachment::AUDIO_MIME_TYPES }
   end
 end

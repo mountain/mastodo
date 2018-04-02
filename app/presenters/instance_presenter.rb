@@ -24,12 +24,29 @@ class InstancePresenter
     Rails.cache.fetch('local_status_count') { Account.local.sum(:statuses_count) }
   end
 
+  def whitelist
+    Rails.cache.fetch('whitelist') { DomainWhitelist.all }
+  end
+
   def domain_count
-    Rails.cache.fetch('distinct_domain_count') { Account.distinct.count(:domain) }
+    if DomainWhitelist.enabled? 
+      whitelist.length
+    else
+      Rails.cache.fetch('distinct_domain_count') { Account.distinct.count(:domain) }
+    end
   end
 
   def version_number
     Mastodon::Version
+  end
+
+  def commit_hash
+    current_release_file = Pathname.new('CURRENT_RELEASE').expand_path
+    if current_release_file.file?
+      IO.read(current_release_file).strip!
+    else
+      ''
+    end
   end
 
   def source_url

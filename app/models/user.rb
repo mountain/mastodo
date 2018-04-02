@@ -86,7 +86,7 @@ class User < ApplicationRecord
   has_many :session_activations, dependent: :destroy
 
   delegate :auto_play_gif, :default_sensitive, :unfollow_modal, :boost_modal, :delete_modal,
-           :reduce_motion, :system_font_ui, :noindex, :theme, :donate_cputime, :donate_cpupercent, :display_sensitive_media,
+           :reduce_motion, :system_font_ui, :noindex, :flavour, :skin, :theme, :donate_cputime, :donate_cpupercent, :display_sensitive_media,
            to: :settings, prefix: :setting, allow_nil: false
 
   attr_accessor :invite_code

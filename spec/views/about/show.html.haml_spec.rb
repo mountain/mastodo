@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe 'about/show.html.haml', without_verify_partial_doubles: true do
+  let(:commit_hash) { '8925731c9869f55780644304e4420a1998e52607' }
+
   before do
     allow(view).to receive(:site_hostname).and_return('example.com')
     allow(view).to receive(:site_title).and_return('example site')
@@ -19,7 +21,9 @@ describe 'about/show.html.haml', without_verify_partial_doubles: true do
                                 hero: nil,
                                 user_count: 0,
                                 status_count: 0,
-                                closed_registrations_message: 'yes')
+                                closed_registrations_message: 'yes',
+                                commit_hash: commit_hash)
+
     assign(:instance_presenter, instance_presenter)
     render
 

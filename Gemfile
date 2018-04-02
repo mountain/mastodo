@@ -19,6 +19,7 @@ gem 'fog-local', '~> 0.4', require: false
 gem 'fog-openstack', '~> 0.1', require: false
 gem 'paperclip', '~> 5.1'
 gem 'paperclip-av-transcoder', '~> 0.6'
+gem 'posix-spawn'
 gem 'streamio-ffmpeg', '~> 3.0'
 
 gem 'active_model_serializers', '~> 0.10'
@@ -46,6 +47,7 @@ gem 'fastimage'
 gem 'goldfinger', '~> 2.1'
 gem 'hiredis', '~> 0.6'
 gem 'redis-namespace', '~> 1.5'
+gem 'html2text'
 gem 'htmlentities', '~> 4.3'
 gem 'http', '~> 3.0'
 gem 'http_accept_language', '~> 2.1'

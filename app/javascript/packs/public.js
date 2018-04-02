@@ -1,26 +1,8 @@
 import loadPolyfills from '../mastodon/load_polyfills';
 import ready from '../mastodon/ready';
 
-window.addEventListener('message', e => {
-  const data = e.data || {};
-
-  if (!window.parent || data.type !== 'setHeight') {
-    return;
-  }
-
-  ready(() => {
-    window.parent.postMessage({
-      type: 'setHeight',
-      id: data.id,
-      height: document.getElementsByTagName('html')[0].scrollHeight,
-    }, '*');
-  });
-});
-
 function main() {
-  const { length } = require('stringz');
   const IntlRelativeFormat = require('intl-relativeformat').default;
-  const { delegate } = require('rails-ujs');
   const emojify = require('../mastodon/features/emoji/emoji').default;
   const { getLocale } = require('../mastodon/locales');
   const { localeData } = getLocale();

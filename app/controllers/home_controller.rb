@@ -6,6 +6,7 @@ class HomeController < ApplicationController
   # rubocop sees that as a hash ?!
   before_action :authenticate_user!, :except => %i(piwik) # rubocop:disable Style/HashSyntax
   before_action :set_initial_state_json, :except => %i(piwik)
+  before_action :set_pack
 
   def index
     @body_classes = 'app-body'
@@ -58,6 +59,10 @@ class HomeController < ApplicationController
 
     matches = request.path.match(%r{\A/web/timelines/tag/(?<tag>.+)\z})
     redirect_to(matches ? tag_path(CGI.unescape(matches[:tag])) : default_redirect_path)
+  end
+
+  def set_pack
+    use_pack 'home'
   end
 
   def set_initial_state_json

@@ -225,6 +225,8 @@ GEM
     hiredis (0.6.1)
     hitimes (1.2.6)
     hkdf (0.3.0)
+    html2text (0.2.1)
+      nokogiri (~> 1.6)
     htmlentities (4.3.4)
     http (3.0.0)
       addressable (~> 2.3)
@@ -370,6 +372,7 @@ GEM
       activesupport
       rails (>= 3.0.0)
     pkg-config (1.2.8)
+    posix-spawn (0.3.13)
     powerpack (0.1.1)
     premailer (1.11.1)
       addressable
@@ -656,6 +659,7 @@ DEPENDENCIES
   goldfinger (~> 2.1)
   hamlit-rails (~> 0.2)
   hiredis (~> 0.6)
+  html2text
   htmlentities (~> 4.3)
   http (~> 3.0)
   http_accept_language (~> 2.1)
@@ -689,6 +693,7 @@ DEPENDENCIES
   pghero (~> 1.7)
   piwik_analytics (~> 1.0.2)
   pkg-config (~> 1.2)
+  posix-spawn
   premailer-rails
   private_address_check (~> 0.4.1)
   pry-rails (~> 0.3)

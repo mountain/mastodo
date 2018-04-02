@@ -10,6 +10,7 @@ require_relative '../app/lib/exceptions'
 require_relative '../lib/paperclip/lazy_thumbnail'
 require_relative '../lib/paperclip/gif_transcoder'
 require_relative '../lib/paperclip/video_transcoder'
+require_relative '../lib/paperclip/audio_transcoder'
 require_relative '../lib/mastodon/snowflake'
 require_relative '../lib/mastodon/version'
 require_relative '../lib/devise/ldap_authenticatable'
@@ -36,6 +37,7 @@ module Mastodon
     # All translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.available_locales = [
+      :awoo,
       :en,
       :ar,
       :bg,
@@ -85,12 +87,17 @@ module Mastodon
 
     config.active_job.queue_adapter = :sidekiq
 
+    #config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins  '*'
         resource '/@:username',  headers: :any, methods: [:get], credentials: false
         resource '/api/*',       headers: :any, methods: [:post, :put, :delete, :get, :patch, :options], credentials: false, expose: ['Link', 'X-RateLimit-Reset', 'X-RateLimit-Limit', 'X-RateLimit-Remaining', 'X-Request-Id']
         resource '/oauth/token', headers: :any, methods: [:post], credentials: false
+        resource '/assets/*', headers: :any, methods: [:get, :head, :options]
+        resource '/stylesheets/*', headers: :any, methods: [:get, :head, :options]
+        resource '/javascripts/*', headers: :any, methods: [:get, :head, :options]
+        resource '/packs/*', headers: :any, methods: [:get, :head, :options]
       end
     end
 
@@ -102,5 +109,12 @@ module Mastodon
       Doorkeeper::AuthorizedApplicationsController.layout 'admin'
       Doorkeeper::Application.send :include, ApplicationExtension
     end
+
+    config.action_dispatch.default_headers = {
+      'Server'                 => 'Awoo.space',
+      'X-Frame-Options'        => 'DENY',
+      'X-Content-Type-Options' => 'nosniff',
+      'X-XSS-Protection'       => '1; mode=block',
+    }
   end
 end

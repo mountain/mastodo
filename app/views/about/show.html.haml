@@ -4,7 +4,6 @@
 - content_for :header_tags do
   %link{ rel: 'canonical', href: about_url }/
   %script#initial-state{ type: 'application/json' }!= json_escape(@initial_state_json)
-  = javascript_pack_tag 'about', integrity: true, crossorigin: 'anonymous'
   = render partial: 'shared/og'
 
 .landing-page.alternative
@@ -36,7 +35,7 @@
       - if Setting.timeline_preview
         .column-2
           .landing-page__hero
-            = image_tag @instance_presenter.hero&.file&.url || @instance_presenter.thumbnail&.file&.url || asset_pack_path('preview.jpg'), alt: @instance_presenter.site_title
+            = image_tag @instance_presenter.hero&.file&.url || @instance_presenter.thumbnail&.file&.url || asset_pack_path('awoospacefrontart-small.png'), alt: @instance_presenter.site_title
 
           .landing-page__information
             .landing-page__short-description
@@ -63,7 +62,7 @@
                   %span= t 'about.status_count_after'
               .row__mascot
                 .landing-page__mascot
-                  = image_tag asset_pack_path('elephant_ui_plane.svg')
+                  = image_tag asset_pack_path('awoospacefrontart-wolf.png')
 
       - else
         .column-2.non-preview
@@ -95,7 +94,7 @@
                   %span= t 'about.status_count_after'
               .row__mascot
                 .landing-page__mascot
-                  = image_tag asset_pack_path('elephant_ui_plane.svg')
+                  = image_tag asset_pack_path('awoospacefrontart-wolf.png')
 
       - if Setting.timeline_preview
         .column-3
@@ -134,3 +133,4 @@
             %p
               = link_to t('about.source_code'), @instance_presenter.source_url
               = " (#{@instance_presenter.version_number})"
+

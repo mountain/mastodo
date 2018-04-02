@@ -2,7 +2,6 @@
   = site_hostname
 
 - content_for :header_tags do
-  = javascript_pack_tag 'public', integrity: true, crossorigin: 'anonymous'
   = render partial: 'shared/og'
 
 .landing-page
@@ -36,8 +35,16 @@
     .container-alt
       = @instance_presenter.site_extended_description.html_safe.presence || t('about.extended_description_html')
 
+  .container
+    = render 'whitelist'
+
+
   .footer-links
     .container-alt
       %p
         = link_to t('about.source_code'), @instance_presenter.source_url
-        = " (#{@instance_presenter.version_number})"
+        - if @instance_presenter.commit_hash == ""
+          %strong= " (#{@instance_presenter.version_number})"
+        - else
+          %strong= "#{@instance_presenter.version_number}, "
+          %strong= "#{@instance_presenter.commit_hash}"

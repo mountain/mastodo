@@ -16,6 +16,7 @@ class StatusesController < ApplicationController
   def show
     respond_to do |format|
       format.html do
+        use_pack 'public'
         @ancestors   = @status.reply? ? cache_collection(@status.ancestors(current_account), Status) : []
         @descendants = cache_collection(@status.descendants(current_account), Status)
 
@@ -41,6 +42,7 @@ class StatusesController < ApplicationController
   end
 
   def embed
+    use_pack 'embed'
     response.headers['X-Frame-Options'] = 'ALLOWALL'
     render 'stream_entries/embed', layout: 'embedded'
   end
